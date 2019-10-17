@@ -1,12 +1,4 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
-import React from 'react';
+import React,{Component} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -24,91 +16,99 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-const App: () => React$Node = () => {
-  return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Header />
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.js</Text> to change this
-                screen and then come back to see your edits.
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    </>
-  );
-};
+import Nav from './src/nav';
+import Generator from './src/generator';
+import Listitem from './src/listitem';
 
-const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
-  },
-  engine: {
-    position: 'absolute',
-    right: 0,
-  },
-  body: {
-    backgroundColor: Colors.white,
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
-  },
+import Input from './src/input';
+class App extends Component {
+
+  state = {
+    nameOfApp:'My Awesome App',
+    random:[20,837]
+  }
+
+  onAddRandom=()=>{
+    // const random =Math.floor(Math.random()*100)+1;
+    // this.setState(prevState=>{
+    //   return {
+    //     random:[...prevState.random,random]
+    //   }
+    // })
+
+    // trial set state
+    // this.setState(prevst=>{
+    //   const a='new name';
+    //   return{
+    //     nameOfApp:[...prevst.nameOfApp,a]
+    //   }
+    // })
+   
+ 
+  }
+
+  onItemDelete=(position)=>{
+    const newArray=this.state.random.filter((item,index)=>{
+      return position !=index
+    })
+    this.setState({
+      random:newArray
+    })
+    // alert(position)
+  }
+  render(){
+  return (
+   <View style={styles.mainView}>
+        <Nav name={this.state.nameOfApp} />
+        <ScrollView style={{width:'100%'}}>
+     <Input/>
+     </ScrollView>
+     
+{/* 
+     <Nav name={this.state.nameOfApp} />
+
+
+     <View style={styles.basicView}> 
+       <Text style={styles.basicText}>test</Text>
+       </View>
+       <View style={styles.basicView}> 
+       <Text style={styles.basicText}>test</Text>
+       </View>
+
+       <Generator add={this.onAddRandom}/>
+
+       <Listitem 
+       items={this.state.random}
+       delete={this.onItemDelete}
+       /> */}
+
+   </View>
+    );
+  }
+}
+
+
+const styles=StyleSheet.create({
+mainView:{
+  backgroundColor:'white',
+  paddingTop:50,
+  width:'100%',
+  alignItems:'flex-start',
+  justifyContent:'flex-start'
+
+},
+basicView:{
+  backgroundColor:'green',
+  width:'100%',
+  marginBottom:5,
+
+},
+basicText:{
+  fontSize:20,
+  color:'white',
+ textAlign:'center',
+ padding:20
+}
 });
 
 export default App;
